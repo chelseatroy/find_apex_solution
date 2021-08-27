@@ -22,7 +22,7 @@
 - How I solve a problem I have, say, a day on, rather than an hour :)
 
 ### Decisions that affected resource usage and latency characteristics:
-- For GIGANTIC files, `process_file` processes the file in batches to avoid going over the machine's resource limit.
+- For files that exceed a predetermined resource limit, `process_file` processes the file in batches to avoid going over the resource limit.
 - `find_apex` uses a binary search strategy whose number of steps increase with the log of the number of lines in the file. Python has a builtin `bisect` for binary search, but it is really designed for use on insertion, not search, and specifically for searching for a given integer in an already-sorted list. We're instead searching for an apex, so binary search here is implemented from scratch.
 -  The `find_apex_iterative` code uses an iterative approach to binary search rather than a recursive implementation because Python does not have tail call optimization, and the iterative approach prevents the situation of pushing a new Frame onto the stack for every additional call to a recursive function.
 - Batches are processed from the beginning of the file to the end, rather than with a binary search strategy. This was originally for client-side simplicity, but it turns out that TRYING to identify the batch containing the apex with binary search puts the hurt on iops (file I/O is heavily optimized for streaming through the file).
