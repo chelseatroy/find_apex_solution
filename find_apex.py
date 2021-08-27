@@ -21,6 +21,10 @@ def find_apex_recursive(collection, start, end): # Collection passed in initial 
 
 
 def find_apex_iterative(collection):
+    # Python has a builtin `bisect` for binary search, but
+    # it is really designed for use on insertion, not search,
+    # and specifically for searching for a given integer in an already-sorted list.
+    # We're instead searching for an apex, so binary search here is implemented from scratch.
     start = 0
     end = len(collection)
     step = 0
