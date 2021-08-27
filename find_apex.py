@@ -1,7 +1,12 @@
 class ApexNotFoundException(Exception):
+    # I want to be EXPLICIT when something didn't work as expected
+    # So no client can accidentally proceed with a non-nominal result.
     pass
 
-def find_apex_recursive(collection, start, end): # collection passed in initial call should already contain integers, for speed
+# We don't use this in the solution, but I included it to compare
+# the effect of a recursive vs an iterative binary search strategy
+# on the stack (Python doesn't have tail call optimization). See video for details.
+def find_apex_recursive(collection, start, end): # Collection passed in initial call should already contain integers, for speed
     mid = start + ((end - start) // 2)
 
     if collection[mid + 1] < collection[mid] > collection[mid - 1]:
@@ -16,15 +21,14 @@ def find_apex_recursive(collection, start, end): # collection passed in initial 
 
 
 def find_apex_iterative(collection):
-    collection = [int(item) for item in collection]
+    collection = [int(item) for item in collection] # Iterative approach allows us to convert only once, even in the function body
     start = 0
     end = len(collection)
     step = 0
 
     while start <= end:
-        # print(f"Subcollection in step {step}: {str(collection[start:end+1])}")
         step = step + 1
-        mid = start + ((end - start) // 2)
+        mid = start + ((end - start) // 2) # See Alberto Savoia's explanation in 'Beautiful Tests' of why we do it this way
 
         if collection[mid + 1] < collection[mid] > collection[mid - 1]:
             return collection[mid], mid
