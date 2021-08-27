@@ -17,6 +17,7 @@
 - How I architect large applications or complex solutions
 - How I handle automated testing, containerization, or deployment on a production app
 - How I organize files (they're all in one directory for now because this is not a prod solution and path management in Python creates enough overhead that it didn't make sense for a one hour challenge)
+- How I choose libraries (I don't have not-invented-here syndrome, I promise. For an actual app where it makes sense to use a library, I use one).
 - How I solve a problem I have, say, a day on, rather than an hour :)
 
 ### Decisions that affected resource usage and latency characteristics:
