@@ -26,7 +26,7 @@ def find_apex_iterative(collection):
         step = step + 1
         mid = start + ((end - start) // 2)
 
-        if collection[mid] > collection[mid - 1] and collection[mid] > collection[mid + 1]:
+        if collection[mid + 1] < collection[mid] > collection[mid - 1]:
             return collection[mid], mid
 
         if collection[mid] > collection[mid - 1]:
