@@ -1,9 +1,7 @@
 class ApexNotFoundException(Exception):
     pass
 
-def find_apex_recursive(collection, start, end):
-    collection = [int(item) for item in collection]
-
+def find_apex_recursive(collection, start, end): # collection passed in initial call should already contain integers, for speed
     mid = start + ((end - start) // 2)
 
     if collection[mid + 1] < collection[mid] > collection[mid - 1]:
