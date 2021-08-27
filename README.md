@@ -2,7 +2,7 @@
 
 ### To Run This Code:
 - This code uses only Python builtins. So you don't need a dependency manager like pip, and you don't need to pull down any libraries. If your machine has Python 3.+, you should be good to go.
-- Run this code from the command line with `$ python command_line_find_apex.py FILENAME`. Optionally, you can set the working data limit: `$ python command_line_find_apex.py FILENAME --working_data_limit=WORKING_DATA_LIMIT`.
+- Run this code from the command lineby navigating to this directory and using the command `$ python command_line_find_apex.py FILENAME`. Optionally, you can set the working data limit: `$ python command_line_find_apex.py FILENAME --working_data_limit=WORKING_DATA_LIMIT`.
 - Run any test by navigating to the `find_apex_solution` directory and running the command `python test_file_name.py`. There is a test file for the `find_apex` functions, a test file for the `process_file` function, a test file for benchmarking speed, and a test file for benchmarking resource use.
 
 ### How this Code Works:
