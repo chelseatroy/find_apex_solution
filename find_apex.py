@@ -21,7 +21,6 @@ def find_apex_recursive(collection, start, end): # Collection passed in initial 
 
 
 def find_apex_iterative(collection):
-    collection = [int(item) for item in collection] # Iterative approach allows us to convert only once, even in the function body
     start = 0
     end = len(collection)
     step = 0
@@ -30,10 +29,14 @@ def find_apex_iterative(collection):
         step = step + 1
         mid = start + ((end - start) // 2) # See Alberto Savoia's explanation in 'Beautiful Tests' of why we do it this way
 
-        if collection[mid + 1] < collection[mid] > collection[mid - 1]:
-            return collection[mid], mid
+        before = int(collection[mid + 1])
+        maybe_apex = int(collection[mid])
+        after = int(collection[mid - 1])
 
-        if collection[mid] > collection[mid - 1]:
+        if before < maybe_apex > after:
+            return maybe_apex, mid
+
+        if maybe_apex > after:
             start = mid + 1
         else:
             end = mid - 1
