@@ -36,5 +36,18 @@ item, index = process_file('inconvenient_split.txt', working_data_limit=14)
 assert item == 110
 assert index == 5
 
+# THIS example tests a case that I did not test on the first 1-hour pass
+# because I did the exact thing I coach people not to do and went too fast XD
+# It exercises the case where there's a batch with one line in it
+# that is relevant to finding the apex.
+item, index = process_file('the_lonely_batch.txt', working_data_limit=14)
+assert item == 112
+assert index == 5
+# And THIS test is how I realized, when I switched from converting strings to ints
+# at the last possible moment rather than up front for efficiency's sake
+# that I MISSED a conversion: I have to convert the last item in the previous batch
+# to compare it to the only item in the lonely batch!
+
+
 
 
