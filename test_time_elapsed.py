@@ -1,11 +1,11 @@
-import timeit
+import time
 
 from process_file import process_file
 
 def print_runtime_for_processing(filename):
-    start = timeit.timeit()
+    start = time.time()
     process_file(filename)
-    end = timeit.timeit()
+    end = time.time()
     print(f"Processed file {filename} in {(end - start) * 1000} milliseconds")
 
 print_runtime_for_processing('teenylines.txt')
