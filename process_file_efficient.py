@@ -23,6 +23,8 @@ def process_file_efficient(filename):
             # the other one to this implementation of 'is_smaller'
             left = cursor.readline().strip()
             maybe_apex = cursor.readline().strip()
+
+            # I define 'position' as my cursor position in bytes at the end of the apical line
             maybe_apex_position = cursor.tell()
             right = cursor.readline().strip()
 
@@ -30,7 +32,7 @@ def process_file_efficient(filename):
                 if(is_smaller(right, maybe_apex)):
                     if right == '':
                         raise ApexNotFoundException("Numbers only ascend")
-                    return maybe_apex, maybe_apex_position # I define 'position' as my cursor position in bytes at the end of the apical line
+                    return maybe_apex, maybe_apex_position
                 else:
                     #update the cursor position to do the right half and run again
                     proportion_through_file = proportion_through_file + ((size - proportion_through_file) / 2)
