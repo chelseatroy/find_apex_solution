@@ -18,7 +18,7 @@ except ApexNotFoundException as e:
         raise AssertionError("Honestly, no idea what happened here")
 try:
     apex, position = process_file_efficient('only_descending.txt')
-    raise AssertionError("This should raise because the numbers only ascend in this file")
+    raise AssertionError("This should raise because the numbers only descend in this file")
 except ApexNotFoundException as e:
     if str(e) == "Numbers only descend":
         pass
