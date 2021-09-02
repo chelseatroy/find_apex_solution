@@ -1,14 +1,6 @@
 import os
 from find_apex import ApexNotFoundException
 
-
-def is_smaller(maybe_smaller, comparator):
-    if len(maybe_smaller) != len(comparator):
-        return len(maybe_smaller) < len(comparator)
-    return maybe_smaller < comparator
-
-print(is_smaller('', '1'))
-
 def process_file_efficient(filename):
     size = os.path.getsize(filename)
     proportion_through_file = 0.5
@@ -40,8 +32,8 @@ def process_file_efficient(filename):
                         raise ApexNotFoundException("Numbers only ascend")
                     return maybe_apex, maybe_apex_position # I define 'position' as my cursor position in bytes at the end of the apical line
                 else:
-                    #update the indices to do the right half and run again
+                    #update the cursor position to do the right half and run again
                     proportion_through_file = proportion_through_file + ((size - proportion_through_file) / 2)
             elif is_smaller(right, maybe_apex):
-                #update the indices to do the left half and run again
+                #update the cursor position to do the left half and run again
                 proportion_through_file = 0.0 + ((proportion_through_file - 0.0) / 2)
