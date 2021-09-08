@@ -1,22 +1,20 @@
 import os
-from find_apex import ApexNotFoundException
 
 def process_file_efficient(filename):
-    size = os.path.getsize(filename)
-    proportion_through_file = 0.5
+    start, end = 0, os.path.getsize(filename)
 
     def is_smaller(maybe_smaller, comparator):
         if len(maybe_smaller) != len(comparator):
             return len(maybe_smaller) < len(comparator)
         return maybe_smaller < comparator
 
-    with open(filename, 'r') as cursor:
+    with open(filename, 'rb') as cursor:
         while True:
-            bytes_position = size * proportion_through_file
-            if bytes_position < 1:
-                raise ApexNotFoundException("Numbers only descend")
+            bytes_position = start + (end - start) // 2
+            print("Looking at %d" % bytes_position)
             cursor.seek(bytes_position)
-            cursor.readline() # this could be halfway through a line so we throw it out
+            if bytes_position > 0:
+                cursor.readline()  # this could be halfway through a line so we throw it out except if first line
 
             # strip removes newlines on the end, otherwise in two numeric strings
             # with the same number of chars, the one with the newline looks 'greater than'
@@ -27,15 +25,30 @@ def process_file_efficient(filename):
             # I define 'position' as my cursor position in bytes at the end of the apical line
             maybe_apex_position = cursor.tell()
             right = cursor.readline().strip()
-
-            if is_smaller(left, maybe_apex):
-                if(is_smaller(right, maybe_apex)):
-                    if right == '':
-                        raise ApexNotFoundException("Numbers only ascend")
+            if left and maybe_apex and right:
+                if is_smaller(left, maybe_apex) and is_smaller(right, maybe_apex):
                     return maybe_apex, maybe_apex_position
+                if is_smaller(right, maybe_apex):
+                    # Descending
+                    end = bytes_position
                 else:
-                    #update the cursor position to do the right half and run again
-                    proportion_through_file = proportion_through_file + ((size - proportion_through_file) / 2)
-            elif is_smaller(right, maybe_apex):
-                #update the cursor position to do the left half and run again
-                proportion_through_file = 0.0 + ((proportion_through_file - 0.0) / 2)
+                    # Ascending
+                    start = bytes_position
+            else:
+                end = bytes_position
+
+import cProfile
+import pstats
+from pstats import SortKey
+
+cProfile.run('process_file_efficient("biglines.txt")', 'profiling.txt')
+
+p = pstats.Stats('profiling.txt')
+p.strip_dirs().sort_stats(-1).print_stats()
+
+print("MOST CUMULATIVE TIME SPENT")
+p.sort_stats(SortKey.CUMULATIVE).print_stats(10)
+
+print("MOST TIME PER CALL")
+p.sort_stats(SortKey.TIME).print_stats(10)
+
